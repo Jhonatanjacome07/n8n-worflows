@@ -1,9 +1,3 @@
-¡Excelente! He analizado tus tres flujos de n8n y la funcionalidad que ofrecen cuando trabajan en conjunto. Son las piezas de un poderoso asistente de IA que se conecta por WhatsApp y es capaz de gestionar tareas del mundo real.
-
-Aquí tienes la propuesta de README. Está diseñado para ser llamativo, claro y guiar a cualquier persona (incluyéndote a ti en el futuro) a través de la configuración completa.
-
----
-
 # 🚀 Asistente IA Multi-Herramienta para WhatsApp con n8n 🚀
 
 Este proyecto transforma tu n8n en un poderoso Asistente de Inteligencia Artificial accesible a través de WhatsApp. Impulsado por Google Gemini, este bot no solo conversa, sino que actúa. Puede gestionar tu agenda, enviar correos electrónicos y recordar tus conversaciones para ofrecer una experiencia fluida y personalizada.
@@ -120,15 +114,30 @@ Crearemos una única credencial de Google OAuth 2.0 que dará acceso a los tres 
     - En cada uno de estos nodos, selecciona la credencial correspondiente que creaste en los pasos anteriores.
 3.  **Activar los Flujos:** Una vez que todas las credenciales estén asignadas correctamente, activa los tres flujos de trabajo haciendo clic en el interruptor `Active` en la esquina superior izquierda de cada uno.
 
-## 💬 ¿Cómo Usarlo?
+💬 ¿Cómo Usarlo?
+¡Interactuar con el asistente es tan fácil como hablar con un asesor por WhatsApp! El bot está diseñado para que los clientes puedan resolver sus dudas y gestionar sus visitas de manera fluida y natural.
 
-¡Simple! Envía un mensaje de WhatsApp al número que tienes conectado a tu Evolution API.
+Simplemente envía un mensaje al número de WhatsApp conectado y el asistente se encargará del resto.
 
-**Ejemplos de Comandos:**
+Ejemplos de Interacción
+Un cliente puede iniciar la conversación y realizar acciones como:
 
-- `"¿Tengo algo agendado para mañana a las 10 am?"`
-- `"Crea un evento para una 'Reunión de proyecto' el viernes a las 3 pm con una duración de 1 hora."`
-- `"Envía un correo a juan.perez@example.com con el asunto 'Reunión confirmada' y el mensaje 'Hola Juan, confirmo nuestra reunión para mañana. ¡Saludos!'"`
-- `"¿De qué estábamos hablando?"` (Para probar la memoria)
+Consultar sobre vehículos:
 
-El asistente interpretará tu solicitud, usará las herramientas necesarias y te responderá directamente en el chat. ¡Disfruta de tu nuevo superpoder de automatización!
+"Hola, me gustaría saber qué modelos de Audi tienen disponibles."
+"¿Podrías darme más detalles del Tesla Model Y? Me interesa la autonomía y el precio."
+"Quisiera saber sobre las opciones de financiamiento para un BYD."
+Agendar una visita (cita):
+
+"Me gustaría agendar una cita para ver el Ford Mustang Mach-E."
+El bot le pedirá los datos necesarios (nombre, email, fecha y hora deseadas).
+Automáticamente, el sistema creará el evento en Google Calendar y enviará un email de confirmación al cliente.
+Modificar una cita existente:
+
+"Hola, tengo una cita agendada para hoy pero necesito cambiarla para mañana a la misma hora."
+"¿Podemos mover mi visita del viernes para el sábado por la mañana?"
+Cancelar una visita:
+
+"Necesito cancelar la cita que tenía para esta semana."
+"Por favor, elimina mi visita del jueves."
+El asistente está programado para interpretar estas solicitudes, usar sus herramientas de calendario y correo de forma autónoma, y responder directamente en el chat. ¡Es un verdadero asesor de ventas y gestor de citas disponible 24/7!
