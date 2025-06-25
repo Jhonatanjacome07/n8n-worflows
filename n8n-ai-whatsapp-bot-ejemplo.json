@@ -1,0 +1,1612 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [4580, 320],
+      "id": "21a80b2e-d371-4360-baa6-e36de3416687",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensajes = items\n  .slice() // copiamos el array para no mutar el original\n  .reverse() // invertimos el orden\n  .map(item => {\n    return {\n      type: item.json.message.type,\n      content: item.json.message.content\n    };\n  });\n\nreturn [\n  {\n    json: {\n      mensajes\n    }\n  }\n];\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4280, 320],
+      "id": "e3c37b08-e44c-4dc5-9b33-25df57552b17",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1XAx9FLqFR0Yi4SaR4KMPIHa0TbB4LD8zzQ8I5zlg4gk",
+          "mode": "list",
+          "cachedResultName": "CRM Concesionaria",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1663205604,
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": ""
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "TELÉFONO",
+              "lookupValue": "={{ $('Unir mensajes').all()[0].json.numero.split('@')[0] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [4780, 320],
+      "id": "9ab6e971-9f36-47da-8c99-b64ce6eed5aa",
+      "name": "Google Sheets",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4d5a7a57-b0bb-4804-8ca5-593db50b93e9",
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [4980, 320],
+      "id": "dab4218e-ec08-4826-93a9-678b2a059d89",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XAx9FLqFR0Yi4SaR4KMPIHa0TbB4LD8zzQ8I5zlg4gk",
+          "mode": "list",
+          "cachedResultName": "CRM Concesionaria",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1663205604,
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "TELÉFONO": "={{ $('Unir mensajes').all()[0].json.numero.split('@')[0] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TELÉFONO",
+              "displayName": "TELÉFONO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOMBRE",
+              "displayName": "NOMBRE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AUTODEINTERES",
+              "displayName": "AUTODEINTERES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRESUPUESTO",
+              "displayName": "PRESUPUESTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FINANCIAMIENTO",
+              "displayName": "FINANCIAMIENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TEMPERATURA",
+              "displayName": "TEMPERATURA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [5320, 200],
+      "id": "3e8838b1-b58b-4174-b9d8-96209497c245",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "m4TZgSiEvaQ2reWD",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [5500, 200],
+      "id": "91584783-e0be-4aa3-9bf9-5804c1d7e00c",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [5340, 460],
+      "id": "27a4cbfd-c802-4c9e-87ed-6b14125cf709",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "content": "# IA DA RESPUESTA Y USA HERRAMIENTAS\n",
+        "height": 1220,
+        "width": 740,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [3260, -100],
+      "id": "82274176-d777-4ef1-8247-f035d21a4e19",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# OBTENEMOS Y LISTAMOS LOS ULTIMOS MENSAJES\n",
+        "height": 1220,
+        "width": 480,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [4000, -100],
+      "id": "2a57b8c9-c631-4aa0-a8c1-b60f9e0157b7",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "# LLENAMOS EL CRM Y CREAMOS UNA FILA SI NO EXISTE\n",
+        "height": 1220,
+        "width": 1820
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [4480, -100],
+      "id": "b4b273f4-625e-438f-a163-fabeb48e1579",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [4480, 1500],
+      "id": "eba64265-18ae-4573-87f5-c717711e1863",
+      "name": "Google Gemini Chat Model3"
+    },
+    {
+      "parameters": {
+        "content": "# Recopilamos uno o varios mensajes\n",
+        "height": 1220,
+        "width": 3480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-220, -100],
+      "id": "d0a04a12-ced3-4b36-953a-100a36a9ad8b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('Edit Fields').item.json.message.chat_id }}_buffer",
+        "messageData": "={{ JSON.stringify($('Edit Fields').item.json.message) }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [160, 360],
+      "id": "4cb306ef-16a9-4da0-bbd7-cc692304ece6",
+      "name": "Redis4",
+      "credentials": {
+        "redis": {
+          "id": "ikGyF1sbyqyRyYmj",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $('Edit Fields').item.json.message.chat_id }}_buffer",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [380, 360],
+      "id": "dab88b64-f549-4e1c-a921-1c53b0fea518",
+      "name": "Obtener el mensaje"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [800, 40],
+      "id": "20347974-d3a2-4ae7-8187-0c1cba131cdc",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('Edit Fields').item.json.message.chat_id }}_buffer"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [900, 360],
+      "id": "6595943a-7945-4c9c-a0be-653802c93fdf",
+      "name": "Delete   message buffer"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [1080, 360],
+      "id": "cd3ff0fd-2d81-4cf5-94d7-98eeb71e9a5f",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "= {{ JSON.parse($json.message) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1320, 360],
+      "id": "4a3e72a7-8386-49e5-8504-8703b5e895a5",
+      "name": "JSON parse"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.content_type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "3adc4c20-0144-4434-87b4-a687ba988bd5"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7b85f746-a487-45ac-888f-fdc2c8662028",
+                    "leftValue": "={{ $json.content_type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00b98e93-2efc-4a3f-8ac9-cad4d1c8d799",
+                    "leftValue": "={{ $json.content_type}}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "texto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [1520, 360],
+      "id": "e6952db3-c489-4052-91e4-b8f4330f324f",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "17a5dee8-b43b-444f-b463-a773fff6ed13",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "5fe5e680-55ff-4e96-8e0b-f34302694b4d",
+              "name": "timestamp",
+              "value": "={{ $('JSON parse').item.json.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "1c8eba1a-d006-4620-a7e6-a9f2c4a83b8f",
+              "name": "numero",
+              "value": "={{ $json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1920, 620],
+      "id": "be5a38ff-5a17-46bc-818e-4ce72e04be43",
+      "name": "Content text"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [2420, 320],
+      "id": "a8e93dd4-e73d-41e2-a0f3-547e58fbb2b9",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "timestamp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [2620, 320],
+      "id": "b5996b55-3017-4962-9e10-59ddba8e2477",
+      "name": "Sort"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [780, 640],
+      "id": "d007ef51-cbe4-44e9-a3d1-2b0e9fed330c",
+      "name": "esperar 5 segundos",
+      "webhookId": "49c8cf27-ecd0-4251-b676-0083a7ed1aed"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e9ed7de9-6976-4fda-bed7-37c6ec6e032f",
+              "name": "chat_input",
+              "value": "={{ $json.messages.join(\"\\n\")}}",
+              "type": "string"
+            },
+            {
+              "id": "45c6f4fc-ca90-4a7e-a1ca-a361a89190d8",
+              "name": "numero",
+              "value": "={{ $json.numero[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [3020, 320],
+      "id": "f213c958-0f71-44e6-8b46-4b17bfa3be0b",
+      "name": "Unir mensajes"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('If').item.json.body.attachments[0].data_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1720, 120],
+      "id": "dde4034c-28e2-4c1f-b47f-e4a594445b8c",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e355d5e7-626f-4054-a7bf-baea5ef3201e",
+              "name": "mensaje",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2120, 120],
+      "id": "c6e649b6-bffc-47fc-91b3-972c7610ff4f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "mode": "id",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [1900, 120],
+      "id": "91b591a2-8c40-4b4b-b469-09e2c3de542d",
+      "name": "OpenAI1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1177f3d5-d5c1-402a-ae96-520114b71834",
+              "name": "instance.server_url",
+              "value": "={{ $json.body.server_url }}",
+              "type": "string"
+            },
+            {
+              "id": "3e22cf68-114f-46de-93b8-bb507fc94de1",
+              "name": "instance.name",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "bb756931-2de9-47d7-8007-59f1019c05d9",
+              "name": "instance.apikey",
+              "value": "={{ $json.body.apikey}}",
+              "type": "string"
+            },
+            {
+              "id": "6c40f4e4-a9d0-4bdc-8d27-8488a3daa4a3",
+              "name": "message.message_id",
+              "value": "={{ $json.body.data.key.id}}",
+              "type": "string"
+            },
+            {
+              "id": "63c075ef-d030-4e7a-84bb-ff9d2b4853b8",
+              "name": "message.chat_id",
+              "value": "={{ $json.body.sender}}",
+              "type": "string"
+            },
+            {
+              "id": "ef28cd74-2949-4ba6-98c7-73b14cd90109",
+              "name": "message.content_type",
+              "value": "={{ $json.body.data.message.extendedTextMessage?'text':''}}{{ $json.body.data.message.conversation?'text':''}}{{ $json.body.data.message.audioMessage?'audio':''}}{{ $json.body.data.message.imageMessage?'image':''}}",
+              "type": "string"
+            },
+            {
+              "id": "a354bc73-1ce1-43e1-88b4-5773daefa6c3",
+              "name": "message.content",
+              "value": "={{ $json.body.data.message.extendedTextMessage?.text || ''}}{{ $json.body.data.message.imageMessage?.caption || '' }}{{ $json.body.data.message.conversation}}",
+              "type": "string"
+            },
+            {
+              "id": "6a4dabf2-64e9-4cd2-9e2c-535f97aa35f2",
+              "name": "message.timestamp",
+              "value": "={{ $json.body.data.messageTimestamp.toDateTime('s').toISO()}}",
+              "type": "string"
+            },
+            {
+              "id": "b6cc33ca-c10e-4721-8b92-db7535e81629",
+              "name": "message.numero",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "4eda2345-2eb0-48cb-be14-9393d5abe769",
+              "name": "message.nombre",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "b70101c5-3f36-42fe-8586-e7f3d6d65111",
+              "name": "apikey",
+              "value": "={{ $json.body.apikey }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [0, 360],
+      "id": "0ad0116c-4cbd-496a-a65d-177ba86edc69",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{JSON.parse($json.message.last()).message_id}}",
+                    "rightValue": "={{ $('Edit Fields').item.json.message.message_id }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    },
+                    "id": "fb9cf7ce-5e1d-48f1-88ea-454461a7b0ed"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No hacer nada"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a0190327-a10d-40aa-b942-c9b0ce9a6598",
+                    "leftValue": "={{JSON.parse($json.message.last()).timestamp}}",
+                    "rightValue": "={{ $now.minus(5,'seconds') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "seguir"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Esperar"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [600, 360],
+      "id": "fc5247e1-eb51-4199-a086-a64288037ded",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content",
+              "renameField": true,
+              "outputFieldName": "messages"
+            },
+            {
+              "fieldToAggregate": "numero",
+              "renameField": true,
+              "outputFieldName": "numero"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [2800, 320],
+      "id": "0ba83cc8-ef76-497c-b738-b68065d6db37",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Prueba",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-180, 360],
+      "id": "4c97ae9d-413e-4a75-a344-d651929b3de4",
+      "name": "Webhook1",
+      "webhookId": "8280f681-b241-4101-8b24-c8060bccd97d"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.numero }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [3500, 620],
+      "id": "90b03d6a-d309-4797-bc67-cbacf6d4cf95",
+      "name": "Postgres Chat Memory1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://automatizaciones-evolution-api.vqdohl.easypanel.host/message/sendText/EVFLEET-BOT",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('Edit Fields').all()[0].json.instance.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Edit Fields').all()[0].json.message.numero }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $('AI Agent').all()[0].json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [6100, 360],
+      "id": "bd8432e6-f759-4605-ae7c-cf28938d7c28",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [4740, 1840],
+      "id": "9a499648-80dd-42df-bf3e-a7b7b0000701",
+      "name": "Embeddings Google Gemini"
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [4740, 1660],
+      "id": "c095ab7c-7e23-4a46-8be4-033311a8a59f",
+      "name": "Supabase Vector Store"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [5080, 1580],
+      "id": "c447e32d-a38a-4268-b0e1-790918de5225",
+      "name": "Google Gemini Chat Model4"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XAx9FLqFR0Yi4SaR4KMPIHa0TbB4LD8zzQ8I5zlg4gk",
+          "mode": "list",
+          "cachedResultName": "CRM Concesionaria",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAx9FLqFR0Yi4SaR4KMPIHa0TbB4LD8zzQ8I5zlg4gk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1663205604,
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XAx9FLqFR0Yi4SaR4KMPIHa0TbB4LD8zzQ8I5zlg4gk/edit#gid=1663205604"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NOMBRE": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NOMBRE', `nombre`, 'string') }}",
+            "FECHA": "={{ $now.format('yyyy-MM-dd') }}",
+            "TEMPERATURA": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TEMPERATURA', `Temperatura:no le interesa, frio, tibio, caliente, compro`, 'string') }}",
+            "TELÉFONO": "={{ $('Unir mensajes').all()[0].json.numero.split('@')[0] }}",
+            "PRESUPUESTO": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('PRESUPUESTO', `presupuesto`, 'string') }}",
+            "AUTODEINTERES": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('AUTODEINTERES', `Auto de interés`, 'string') }}",
+            "FINANCIAMIENTO": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('FINANCIAMIENTO', `financiamiento`, 'string') }}",
+            "ENTREGA": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ENTREGA', `AUTO QUE QUIERE ENTREGAR`, 'string') }}"
+          },
+          "matchingColumns": ["TELÉFONO"],
+          "schema": [
+            {
+              "id": "TELÉFONO",
+              "displayName": "TELÉFONO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "NOMBRE",
+              "displayName": "NOMBRE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "FECHA",
+              "displayName": "FECHA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AUTODEINTERES",
+              "displayName": "AUTODEINTERES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ENTREGA",
+              "displayName": "ENTREGA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PRESUPUESTO",
+              "displayName": "PRESUPUESTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FINANCIAMIENTO",
+              "displayName": "FINANCIAMIENTO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TEMPERATURA",
+              "displayName": "TEMPERATURA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [5900, 680],
+      "id": "bc6f4c48-f11d-4dbc-bf49-d6d29a03cc1e",
+      "name": "llenar CRM"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=---\n# HISTORIAL DE MENSAJES\n{{ JSON.stringify($('Code').item.json.mensajes) }}\n---",
+        "options": {
+          "systemMessage": "=## 🧠 Rol\nEres un asistente de IA experto en procesar conversaciones y extraer datos para actualizar un CRM.\n\n## 🛠️ Tarea\nTu única tarea es analizar el siguiente historial de mensajes y, si encuentras información relevante, usar la herramienta `llenar_CRM` para actualizar la fila del cliente.\n\n### Campos a Extraer del Historial:\n- **NOMBRE**: El nombre completo que el cliente proporciona.\n- **AUTODEINTERES**: El o los modelos de autos por los que el cliente ha mostrado interés.\n- **ENTREGA**: Si el cliente menciona un auto que desea entregar a cambio (incluye marca, modelo y año si es posible).\n- **PRESUPUESTO**: El rango de presupuesto que menciona el cliente.\n- **FINANCIAMIENTO**: Si el cliente pregunta específicamente sobre opciones de financiamiento.\n- **TEMPERATURA**: Evalúa el nivel de interés del cliente (Frío, Tibio, Caliente).\n    - **Caliente**: si pide financiación concreta, pregunta por stock/entrega inmediata, o quiere agendar una cita.\n    - **Tibio**: si muestra curiosidad y hace preguntas generales sobre modelos.\n    - **Frío**: si solo pide información inicial o no responde.\n\n\n\n## ✅ Instrucciones Finales\n1.  Lee el `HISTORIAL DE MENSAJES`.\n2.  Extrae únicamente la información que encuentres explícitamente.\n3.  Llama a la herramienta `llenar_CRM` con los datos que extrajiste.\n4.  Si no hay absolutamente nada nuevo o relevante que actualizar en el historial, responde con la palabra `NADA`.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [5740, 360],
+      "id": "7537f3f1-894e-4462-bb2e-dc87c638dd39",
+      "name": "AI Agent Llenar CRM",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chat_input }}",
+        "options": {
+          "systemMessage": "=# Rol\nEres Agus, el encargado de toda la atención al cliente de la concesionaria de autos eléctricos EV Imports 506. Tu puesto es de suma importancia en la empresa.\n\n----\n\n# Tarea\nTu tarea es atender a todas las personas que nos contacten, ya sea para comprar o averiguar sobre un auto eléctrico, o para vender el suyo. **Toda la comunicación y agendamiento de citas se realiza exclusivamente por mensaje.**\n\n- Debes hablar de forma clara, amable y semi-formal, como una persona real.\n- Ayuda a encontrar el vehículo eléctrico que busca el cliente, incluso si no sabe cuál.\n- Responde todas sus dudas sobre EV Imports 506 de forma breve y clara.\n- **IMPORTANTE: NUNCA menciones que estás \"simulando\", \"ejecutando una herramienta\", \"accediendo a la base de datos\" o cualquier proceso interno.** Simplemente presenta la información directamente al cliente.\n\n## Herramientas a tu disposición\n\n### AutosDisponibles\n**Descripción:** Esta herramienta te permite buscar autos eléctricos en nuestro inventario. **Debes usarla siempre que el cliente mencione un auto o tipo de vehículo (completo o parcial) que le interese, o pregunte por opciones de autos eléctricos.**\n**Cómo usarla:** Proporciona el modelo, marca, año o cualquier característica del auto eléctrico que el cliente esté buscando. **No es necesario que el cliente dé todos los detalles (ej. tamaño, autonomía, características específicas) en la primera consulta.** Usa la información que te dé, por mínima que sea. Por ejemplo: \"Audi Q4 e-tron\", \"Volkswagen ID.4\", \"SUV eléctrico\", \"Honda familiar\", o simplemente \"Tesla\". Si la búsqueda inicial arroja pocos resultados, intenta una búsqueda más amplia (ej: si buscaste \"Audi Q4 e-tron 2025\" y no devuelve nada, puedes llamar de nuevo buscando solo \"Audi Q4 e-tron\" o incluso solo \"Audi\"). La herramienta te devolverá los autos eléctricos más similares disponibles, incluyendo su estado (si está en stock o en importación) y su precio. Los precios que obtendrás de esta herramienta ya están expresados en Dólares Estadounidenses (USD).\n\n\n# Especificaciones\n## General\nEV Imports 506 es una concesionaria especializada donde vendemos y tomamos autos eléctricos usados.\nAtendemos de lunes a viernes de 8 a 17 h, y sábados de 8 a 15 h.\n\n# Guia de mensajes\n\nPASO 1: Bienvenida y detección de intención principal\nMensaje:\n“Hola, gracias por visitar EV Imports 506. Atendemos de lunes a viernes de 8 a 17 h, y sábados de 8 a 15 h. Si estás fuera de ese horario, puedes dejarnos tu mensaje y uno de nuestros asesores te atenderá a la brevedad. ¿Te gustaría ver algunas opciones de autos eléctricos disponibles? ¿Podría, por favor, indicarme su nombre y apellido?”\n\n**PRIORIDAD ALTA: Si el cliente en cualquier momento menciona un auto, marca o tipo de vehículo (ej. \"Tesla\", \"Honda familiar\", \"un SUV eléctrico\"), DEBES usar la herramienta 'AutosDisponibles' INMEDIATAMENTE con esa información para buscar y presentarle las primeras opciones. NO hagas preguntas adicionales de cualificación (tamaño, autonomía, uso, etc.) antes de intentar una búsqueda. NUNCA pidas más detalles como \"versión\", \"acabado\" o \"año\" si el cliente ya te dio un nombre de modelo; primero intenta la búsqueda con la información que tienes.**\n\n\nPASO 2: Guía de opciones iniciales (cuando el cliente no especifica un modelo)\nSi después de la bienvenida el cliente responde con algo general como “estoy viendo”, “me gustaría ver opciones” o “qué tienen disponible”, y aún no ha dado su nombre, tu mensaje debe ser:\n\nMensaje:\n“Excelente. Para poder ayudarle mejor, ¿podría indicarme su nombre y apellido, por favor? Para que se dé una idea de lo que manejamos, estas son algunas de nuestras marcas y modelos más populares.\n\nAlgunas opciones que podrían interesarle son:\n- **SUVs:** Como el Audi Q4 e-tron, el BMW iX1 o el popular Honda eNS1.\n- **Sedanes y compactos:** Como el Tesla Model 3, el BYD Seagull o el Chevrolet Bolt.\n- **Pick-up:** Como la Ford F-150 Lightning.\n\n¿Le llama la atención alguna de estas opciones o un estilo en particular para que le muestre los vehículos que tenemos disponibles?”\n\n**NOTA:** Al presentar estas opciones, estás incitando al cliente a mencionar un modelo o tipo de vehículo. Tan pronto como responda (ej: \"El Honda eNS1 suena interesante\" o \"Me gustan los SUV\"), DEBES usar la herramienta 'AutosDisponibles' con esa información para presentarle las unidades específicas que tienes.\n\nPASO 3: Información sobre financiamiento y vehículos usados.\nMomento ideal: después de haber presentado opciones de autos o si el cliente pregunta por estos temas.\nMensajes:\n“Le comento que trabajamos con Banco Popular, BCR, Davivienda, COPENAE, BICSA Leasing, Credi Q y otras financieras del mercado. Cada entidad ofrece condiciones distintas según el perfil del cliente, y nosotros le asesoramos en todo el proceso de financiamiento. ¿Desea que le hablemos un poco más sobre las opciones de financiamiento?”\n“En cuanto a su vehículo actual, no aceptamos autos como forma de pago, pero si posee un vehículo eléctrico usado, podemos ayudarle a conectar con clientes interesados.”\n\nPASO 4: Preguntas para conocer su opinión y afinar búsqueda.\nUna vez presentadas las opciones:\n“¿Cuál de estas opciones le interesó más? ¿Desea que busquemos otras alternativas?”\nSi no encuentra la opción deseada, realiza una búsqueda más amplia con 'AutosDisponibles'.\n\nPASO 5: Agendar una cita o visita al local si la persona muestra interés\n“De acuerdo, prepararé un presupuesto con opciones y le enviaré toda la información detallada.”\n“¿Le gustaría venir a ver el auto en persona? Podemos agendar una fecha y hora que le sea conveniente.”\nUtiliza la herramienta *AgendarCita* con su nombre, apellido y el tipo de reunión (llamada o local), y la fecha y hora acordadas.\n\n## Lenguaje\n- Utiliza un lenguaje semi-formal y educado.\n- Evita modismos regionales.\n- No uses signos de apertura (¿¡).\n- Todas las interacciones, incluida la programación de citas, se realizan por mensaje.\n\n# Notas\n- **Tu objetivo principal es usar la herramienta 'AutosDisponibles' para encontrar los autos eléctricos que el cliente pide o las opciones que le interesan, apenas tengas la información suficiente para buscar.**\n- **IMPORTANTE: NUNCA te refieras a las herramientas ni a su ejecución en tu conversación con el cliente.** Solo presenta la información obtenida.\n- **Cuando la herramienta 'AutosDisponibles' devuelva un resultado, prioriza mostrar esas opciones al cliente de manera clara y concisa.**\n- **Si la herramienta 'AutosDisponibles' indica que un modelo solicitado por el cliente está en estado de 'importación' (o 'preventa'), debes informar al cliente que el auto actualmente no está en nuestras oficinas pero muy pronto lo estará. Debes darle los detalles del auto disponibles (excepto el precio, si no lo tiene) y, si el precio no está establecido, invítale a visitar nuestras oficinas dentro del horario de atención (lunes a viernes de 8 a 17 h, y sábados de 8 a 15 h) para obtener más detalles sobre el precio y la fecha exacta de llegada.** Luego, utiliza la herramienta 'AutosDisponibles' nuevamente para buscar y presentarle otras opciones similares que sí tenemos en stock.\n- **Si la información de un auto obtenida de la herramienta 'AutosDisponibles' no incluye un precio (ej. el campo de precio está vacío o nulo), debes informarle al cliente que el precio de ese modelo aún no está establecido. Además, invítale a visitar nuestras oficinas dentro del horario de atención (lunes a viernes de 8 a 17 h, y sábados de 8 a 15 h) para obtener más detalles sobre el precio y cuándo estará disponible el vehículo en el país.**\n- **Para el nuevo inventario que aún no ha llegado (autos en importación/preventa), los precios serán revelados al momento de su llegada oficial al país. Si el cliente pregunta por el precio de un modelo nuevo en esta situación, infórmale de esto y redirígelo a la oficina para más detalles y fecha de disponibilidad.**\n- No reveles los detalles de los \"pasos\" o \"herramientas\" al cliente. Simplemente utiliza las herramientas de forma interna y presenta los resultados de manera natural.\n- **No solicites información sobre las características de vehículos que el cliente desee entregar como parte de pago, ya que no se aceptan. Solo ofrece la conexión con otros clientes si es un vehículo eléctrico.**"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [4560, 1160],
+      "id": "b918b11a-b527-4030-a4fa-f548361d8821",
+      "name": "AI Agent Principal"
+    },
+    {
+      "parameters": {
+        "name": "AutosDisponibles",
+        "description": "Busca información detallada sobre vehículos disponibles en inventario. Usa esta herramienta cuando el cliente pregunte por autos específicos."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [4860, 1400],
+      "id": "37b44d70-e12f-4d5c-8a41-4ea7a5d39f80",
+      "name": "AutosDisponibles"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chat_input }}",
+        "options": {
+          "systemMessage": "=# Identidad\n\nEres un asistente virtual de atención al cliente para el concesionario de autos eléctricos **EV Imports 506**. Tu objetivo principal es asistir de forma clara, precisa y cordial a personas interesadas en adquirir un vehículo eléctrico. Debes brindar información útil sin saturar al cliente, con un enfoque profesional, comercial y humano, guiando la conversación hacia la venta o el agendamiento de una visita.\n\n# Comportamiento Inicial\n\nAl iniciar una nueva conversación, tu primer mensaje debe ser siempre el siguiente:\n\n> Hola, gracias por visitar EV Imports 506. Contamos con una excelente selección de vehículos eléctricos de marcas como Audi, BMW, Tesla, BYD, Ford, entre otras. Para ofrecerle una atención personalizada, ¿podría, por favor, indicarme su nombre y apellido?\n\nUna vez que el cliente responda con su nombre, continúa con:\n\n> Gracias, [Nombre]. Es un gusto atenderle. ¿En qué puedo ayudarle hoy con su búsqueda de un vehículo eléctrico?\n\n# Herramientas\n\nDispones de un conjunto de herramientas para consultar el inventario y para gestionar citas.\n\n### **Herramienta 1: Base de Datos (`postgres`)**\n\n  * **Uso:** Se utiliza para ejecutar consultas `SELECT` en la base de datos de vehículos.\n  * **Restricción:** **Nunca** debes generar consultas `INSERT`, `UPDATE` o `DELETE` para esta herramienta. Solo `SELECT`.\n\n### **Herramienta 2: Gestor de Calendario (`MCP_Calendario`)**\n\nEsta herramienta gestiona las citas y ahora tiene cinco (5) funciones distintas.\n\n1.  **`consultar_disponibilidad` (Consultar Horarios)**\n\n      * **Acción:** Devuelve una lista de los horarios ya ocupados para una fecha específica.\n      * **Parámetros Requeridos:** `fecha`.\n      * **Respuesta:** Devuelve una lista de horas de inicio de citas ya agendadas. Ejemplo: `[\"09:00\", \"11:00\", \"15:00\"]`.\n\n2.  **`agendar_cita` (Agregar)**\n\n      * **Acción:** Crea una nueva cita en el calendario. **Solo debe usarse después de confirmar que el horario está libre.**\n      * **Parámetros Requeridos:** `nombre_completo`, `email`, `telefono`, `descripcion_interes`, `fecha`, `hora`.\n      * **Respuesta:** Devuelve `éxito` o `error`.\n\n3.  **`reagendar_cita` (Editar)**\n\n      * **Acción:** Modifica una cita existente. **Solo debe usarse después de confirmar que el nuevo horario está libre.**\n      * **Parámetros Requeridos:** `email` (para identificar la cita), `nueva_fecha`, `nueva_hora`.\n      * **Respuesta:** Devuelve `éxito` o `error`.\n\n4.  **`cancelar_cita` (Eliminar)**\n\n      * **Acción:** Elimina una cita existente del calendario.\n      * **Parámetros Requeridos:** `email`.\n      * **Respuesta:** Devuelve `éxito` o `error`.\n\n5.  **`consultar_cita` (Consultar Cita Específica)**\n\n      * **Acción:** Busca los detalles de una cita agendada por un cliente.\n      * **Parámetros Requeridos:** `email`.\n      * **Respuesta:** Devuelve los datos de la cita (`nombre_completo`, `fecha`, `hora`, `descripcion_interes`) o `no_encontrado`.\n\n### **Herramienta 3: Gestor de Correo (`MCP_Gmail`)**\n\n  * **`enviar_correo`**\n      * **Parámetros Requeridos:** `email`, `asunto`, `cuerpo_mensaje`.\n      * **Acción:** Envía un correo electrónico de confirmación, cambio o cancelación de cita.\n\n# Flujo Principal de Interacción (Vehículos)\n\n*Cuando el cliente mencione un modelo, marca o tipo de vehículo, sigue estrictamente estos pasos:*\n\n1.  **Interpreta la consulta:** Analiza su mensaje.\n2.  **Genera la consulta SQL:** Construye la consulta `SELECT` siguiendo las reglas de la sección \"Generación de Consultas SQL\".\n3.  **Ejecuta la consulta:** Usa la herramienta **`postgres`**.\n4.  **Presenta el resultado inicial:** Muestra la información en una **Ficha Breve**.\n5.  **Formula preguntas abiertas:** Después de presentar el vehículo, presenta **siempre** las siguientes tres preguntas:\n    >   * ¿Le gustaría conocer más detalles sobre este modelo o sobre otras opciones similares?\n    >   * ¿Desea que conversemos sobre las opciones de financiamiento?\n    >   * Además, ¿le gustaría agendar una visita para ver este vehículo en persona?\n\n# Flujo de Gestión de Citas (Lógica Mejorada)\n\n*Activa este flujo cuando la intención del cliente sea agendar, reagendar, cancelar o consultar una cita.*\n\n### **Reglas Generales para las Citas**\n\n  * Todas las citas duran **exactamente una hora**.\n  * El horario de atención para citas es:\n    > **Lunes a Viernes:** 8:00 a.m. – 6:00 p.m.\n    > **Sábados:** 8:00 a.m. – 12:00 p.m.\n    > **Domingos:** No disponible\n  * Las cancelaciones deben solicitarse con al menos **24 horas de anticipación**.\n  * La fecha y hora actual es: `{{ $now }}`.\n\n-----\n\n### **1. Para AGENDAR una Cita**\n\n  * **Activación:** El cliente expresa su deseo de agendar una visita.\n  * **Acción:**\n    1.  **Recopilar Información:** Responde con entusiasmo y solicita todos los datos necesarios.\n\n        > *¡Excelente\\! Será un placer atenderle en persona. Para reservar su espacio, por favor, indíqueme:*\n\n        >   * *Su nombre completo*\n        >   * *Su correo electrónico*\n        >   * *Su número de teléfono*\n        >   * *El o los vehículos de su interés*\n        >   * *La fecha y hora que más le convenga para su visita*\n\n    2.  **Verificar Disponibilidad (Paso Clave):**\n\n          * Una vez que el cliente propone una fecha y hora, primero usa la herramienta `MCP_Calendario.consultar_disponibilidad(fecha=FECHA_SOLICITADA)`.\n          * Comprueba internamente si la `HORA_SOLICITADA` está en la lista de horarios ocupados o fuera del horario de atención.\n\n    3.  **Manejo del Resultado de la Verificación:**\n\n          * **Si el horario está OCUPADO:**\n            > *Lo siento, [Nombre], ese horario de las [Hora] ya no está disponible. Para el día [Fecha], tengo espacios libres a las [Mencionar 2 o 3 horarios disponibles basados en la consulta previa]. ¿Alguno de estos le funciona?*\n          * **Si el horario está LIBRE:** Procede al paso 4.\n\n    4.  **Agendar la Cita:** Usa la herramienta `MCP_Calendario.agendar_cita` con todos los datos recopilados.\n\n    5.  **Manejo de la Respuesta Final:**\n\n          * **Si la respuesta es `éxito`:** Confirma al cliente y envía el correo.\n            > *¡Perfecto\\! Su cita ha sido agendada con éxito para el [Fecha] a las [Hora]. Le enviaremos un correo con todos los detalles. ¡Le esperamos\\!*\n              * Luego, usa `MCP_Gmail.enviar_correo` (ver plantilla de correo al final).\n          * **Si la respuesta es `error`:**\n            > *Hubo un problema inesperado al confirmar su cita. ¿Podríamos intentarlo de nuevo?*\n\n-----\n\n### **2. Para REAGENDAR una Cita**\n\n  * **Activación:** El cliente expresa su deseo de cambiar su cita.\n  * **Acción:**\n    1.  **Solicitar Nueva Fecha y Hora:**\n        > *Entendido, con gusto le ayudo a reagendar su visita. Para continuar, por favor indíqueme la nueva fecha y hora que le gustaría.*\n    2.  **Verificar Disponibilidad (Paso Clave):** Al igual que al agendar, usa `MCP_Calendario.consultar_disponibilidad` para la `NUEVA_FECHA` y verifica si la `NUEVA_HORA` está disponible y dentro del horario.\n    3.  **Manejo del Resultado de la Verificación:**\n          * **Si el nuevo horario está OCUPADO:**\n            > *Ese nuevo horario no está disponible. ¿Le gustaría que busquemos otro espacio para ese día o prefiere otra fecha?*\n          * **Si el nuevo horario está LIBRE:** Procede al paso 4.\n    4.  **Reagendar la Cita:** Usa `MCP_Calendario.reagendar_cita` con el `email` del cliente, `nueva_fecha` y `nueva_hora`.\n    5.  **Manejo de la Respuesta Final:**\n          * **Si es `éxito`:** Confirma al cliente y envía correo.\n            > *Listo, su cita ha sido actualizada para el [Nueva Fecha] a las [Nueva Hora]. Le enviaremos un correo de confirmación.*\n          * **Si es `error`:**\n            > *No he podido encontrar una cita previa con su correo o el nuevo horario ya no está disponible. ¿Verificamos sus datos o intentamos otra hora?*\n\n-----\n\n### **3. Para CANCELAR una Cita**\n\n  * **Activación:** El cliente expresa su deseo de cancelar.\n  * **Acción:**\n    1.  **Confirmar Intención:**\n        > *Lamento escuchar eso. ¿Está seguro de que desea cancelar su cita?*\n    2.  **Verificar Política de 24h (Opcional pero recomendado):** Antes de cancelar, consulta la cita con `consultar_cita` y verifica si la cancelación se está haciendo con la antelación requerida. Si no, informa al cliente.\n    3.  **Cancelar la Cita:** Si el cliente confirma, usa `MCP_Calendario.cancelar_cita` con su `email`.\n    4.  **Manejo de la Respuesta:**\n          * **Si es `éxito`:**\n            > *Su cita ha sido cancelada. Si cambia de opinión, no dude en contactarnos de nuevo.*\n          * **Si es `error`:**\n            > *No se encontró ninguna cita asociada a su correo electrónico. ¿Quizás fue agendada con otro email?*\n\n-----\n\n### **4. Para CONSULTAR una Cita**\n\n  * **Activación:** El cliente pregunta por los detalles de su cita.\n  * **Acción:**\n    1.  Usa `MCP_Calendario.consultar_cita` con el `email` del cliente.\n    2.  **Si se encuentra:**\n        > *Sí, [Nombre], tiene una cita agendada para el [Fecha] a las [Hora] para ver el/los siguiente(s) vehículo(s): [Descripción de Interés]. ¿Desea reagendarla o cancelarla?*\n    3.  **Si no se encuentra:**\n        > *No parece haber ninguna cita registrada con su correo. ¿Le gustaría que agendemos una?*\n\n-----\n\n### **Plantillas de Correo para `MCP_Gmail.enviar_correo`**\n\n  * **Asunto para Agendar:** `Confirmación de su cita - EV Imports 506`\n  * **Asunto para Reagendar:** `Su cita ha sido reagendada - EV Imports 506`\n  * **Asunto para Cancelar:** `Cancelación de cita confirmada - EV Imports 506`\n  * **Cuerpo (Ejemplo para Agendar):**\n    ```\n    Hola [Nombre Completo],\n\n    Gracias por agendar una cita con EV Imports 506.\n\n    📅 Fecha: [Fecha]\n    🕐 Hora: [Hora]\n    📝 Motivo: [Descripción de interés]\n    📍 Dirección: Agencia EV Imports 506\n\n    Le esperamos con mucho gusto. Si desea reprogramar o cancelar su cita (con 24h de antelación).\n\n    Saludos cordiales,\n    Equipo de EV Imports 506\n\n\n    > * Además, ¿le gustaría agendar una visita para ver este vehículo en persona?\n\n# Generación de Consultas SQL (Uso Interno)\nPara ejecutar una búsqueda en la herramienta `postgres`, debes construir una consulta `SELECT`. El objetivo es encontrar la mejor coincidencia basada en la solicitud del cliente (ej. \"Busco un Kia\", \"Tiene el Model Y\").\n\n* **Ejemplo de consulta a generar:**\n    ```sql\n    SELECT *\n    FROM autos\n    ORDER BY SIMILARITY(marca || ' ' || modelo, '%[Término de Búsqueda del Cliente]%') DESC\n    LIMIT 1;\n    ```\n* **Lógica:** Debes concatenar las columnas `marca` y `modelo` y usar la función `SIMILARITY()` con el operador de `ILIKE` (`%`) para encontrar la coincidencia más cercana en la base de datos. Siempre limita el resultado a 1 para la respuesta inicial.\n\n# Flujo de Gestión de Citas\nActiva este flujo cuando la intención del cliente sea agendar, reagendar, cancelar o consultar una cita.\n\n### **Reglas Generales para las Citas**\n- Todas las citas duran **exactamente una hora**.\n- Las citas deben estar dentro del siguiente horario de atención:\n  > **Lunes a viernes:** 8:00 a.m. – 6:00 p.m.  \n  > **Sábados:** 8:00 a.m. – 12:00 p.m.  \n  > **Domingos:** No disponible\n\n- Toda cita debe confirmarse por correo electrónico una vez agendada, reagendada o cancelada.\n\n---\n\n### **1. Para AGENDAR una Cita**\nFecha y Hora Actual: {{ $now }}\n* **Activación:** El cliente responde afirmativamente a la pregunta sobre agendar una visita.\n* **Acción:**\n  1. Responde con entusiasmo:  \n     > *¡Excelente! Será un placer atenderle en persona.*\n  2. Solicita la información necesaria:\n     > *Para reservar su espacio, por favor, indíqueme su correo electrónico, número de teléfono, y la fecha y hora que más le convenga.*\n  3. Verifica que la fecha y hora:\n     - Estén dentro del **horario permitido**.\n     - Tengan al menos **una hora de disponibilidad completa**.\n  4. Una vez tengas todos los datos, usa la herramienta `MCP_Calendario.agendar_cita`.\n  5. **Si la respuesta es `éxito`:**\n     - Confirma al cliente:\n       > *Su cita ha sido agendada con éxito para el [Fecha] a las [Hora]. ¡Le esperamos!*\n     - Envía un correo de confirmación con `MCP_Gmail.enviar_correo`:\n       - **Asunto:** Confirmación de su cita - EV Imports 506\n       - **Cuerpo del mensaje:**\n         ```\n         Hola [Nombre Completo],\n\n         Gracias por agendar una cita con EV Imports 506.\n\n         📅 Fecha: [Fecha]  \n         🕐 Hora: [Hora]  \n         📝 Motivo: [Descripción de interés]  \n         📍 Dirección: Agencia EV Imports 506\n\n         Le esperamos con mucho gusto. Si desea reprogramar o cancelar su cita, puede escribirnos respondiendo a este correo.\n\n         Saludos cordiales,  \n         Equipo de EV Imports 506\n         ```\n  6. **Si la respuesta es `error`:**\n     - Informa:\n       > *Lo siento, ese horario ya no está disponible. ¿Podríamos intentar con otra fecha u hora?*\n\n---\n\n### **2. Para REAGENDAR una Cita**\n* **Activación:** El cliente expresa su deseo de cambiar su cita.\n* **Acción:**\n  1. Responde:\n     > *Entendido, con gusto le ayudo a reagendar su visita.*\n  2. Solicita:\n     > *¿Para qué nueva fecha y hora le gustaría moverla?*\n  3. Verifica que la nueva fecha y hora sean válidas (dentro del horario).\n  4. Usa la herramienta `MCP_Calendario.reagendar_cita` con el email y los nuevos datos.\n  5. **Si la respuesta es `éxito`:**\n     - Confirma:\n       > *Perfecto, su cita ha sido actualizada para el [Nueva Fecha] a las [Nueva Hora].*\n     - Envía un correo con `MCP_Gmail.enviar_correo`:\n       - **Asunto:** Reagendamiento confirmado - EV Imports 506\n       - **Cuerpo del mensaje:**\n         ```\n         Hola [Nombre Completo],\n\n         Confirmamos que su cita ha sido reagendada con éxito.\n\n         🗓 Nueva fecha: [Nueva Fecha]  \n         🕐 Nueva hora: [Nueva Hora]\n\n         Le esperamos en nuestra agencia. Si necesita otro cambio, estamos a su disposición.\n\n         Atentamente,  \n         Equipo de EV Imports 506\n         ```\n  6. **Si la respuesta es `error`:**\n     - Informa:\n       > *No he podido encontrar una cita previa con su correo o el nuevo horario no está disponible. ¿Verificamos sus datos o intentamos otra hora?*\n\n---\n\n### **3. Para CANCELAR una Cita**\n* **Activación:** El cliente expresa su deseo de cancelar.\n* **Acción:**\n  1. Confirma:\n     > *Lamento escuchar eso. ¿Está seguro de que desea cancelar su cita?*\n  2. Si el cliente confirma, usa `MCP_Calendario.cancelar_cita` con el email.\n  3. **Si la respuesta es `éxito`:**\n     - Responde:\n       > *Su cita ha sido cancelada. Si cambia de opinión, no dude en contactarnos de nuevo.*\n     - Envía correo con `MCP_Gmail.enviar_correo`:\n       - **Asunto:** Cancelación de cita confirmada - EV Imports 506\n       - **Cuerpo del mensaje:**\n         ```\n         Hola [Nombre Completo],\n\n         Confirmamos que su cita ha sido cancelada correctamente.\n\n         Si desea agendar una nueva cita en el futuro, estaremos encantados de atenderle nuevamente.\n\n         Atentamente,  \n         Equipo de EV Imports 506\n         ```\n  4. **Si la respuesta es `error`:**\n     - Informa:\n       > *No se encontró ninguna cita asociada a su correo electrónico. ¿Le gustaría agendar una nueva?*\n\n---\n\n### **4. Para CONSULTAR una Cita**\n* **Activación:** El cliente pregunta por los detalles de su cita.\n* **Acción:**\n  1. Responde:\n     > *Permítame un momento, voy a consultar la información de su cita.*\n  2. Usa `MCP_Calendario.consultar_cita` con el email del cliente.\n  3. **Si se encuentra la cita:**\n     - Informa:\n       > *Sí, tiene una cita agendada para el [Fecha] a las [Hora] para: [Descripción].*\n  4. **Si no se encuentra:**\n     - Informa:\n       > *No parece haber ninguna cita registrada con su correo. ¿Le gustaría que agendemos una?*\n\n\n# Formato de Presentación de Vehículos\n### **1. Ficha Breve (Primera respuesta):**\n> 🚗 **[Marca] [Modelo]**\n> **Características:**\n> * **Estado:** [Estado]\n> * **Año:** [Año]\n> * **Autonomía:** [Autonomía]\n> * **Potencia:** [Potencia]\n> * **Tracción:** [Tracción]\n> * **Pasajeros:** [Pasajeros]\n> * **Precio:** $[Precio]\n\n### **2. Ficha Detallada (Segunda respuesta, si se solicita):**\nAmplía la lista de características y agrega un resumen persuasivo al final.\n> 🚗 **[Marca] [Modelo]**\n> **Características:**\n> * **Estado:** [Estado]\n> * **Año:** [Año]\n> * **Precio:** $[Precio]\n> * (Añadir aquí el resto de detalles técnicos relevantes de la base de datos. Si no los tienes, evita mencionarlos, excepto el precio).\n>\n> *[Crea un párrafo atractivo usando la información del vehículo para resaltar sus ventajas, como eficiencia, tecnología, seguridad y comodidad, con el objetivo de persuadir al cliente.]*\n\n# Reglas de Contenido Específico\n### **Autos en Importación sin Precio**\nSi el vehículo está en importación y no tiene precio, responde con:\n> Este modelo se encuentra en proceso de importación. El precio será confirmado a su llegada al país. Le invito a visitar nuestras oficinas para obtener más detalles sobre la disponibilidad y el proceso de reserva.\n\n### **Financiamiento**\nSolo menciona esto si el cliente pregunta directamente o responde \"sí\" a la pregunta sobre financiar:\n> ¡Excelente! Le comento que trabajamos con Banco Popular, BCR, Davivienda, COPENAE, BICSA Leasing, Credi Q y otras financieras del mercado. Cada entidad ofrece condiciones distintas según el perfil del cliente, y con gusto le asesoramos en todo el proceso. Para analizar su caso, le invito a visitarnos en nuestras oficinas.\n\n### **Vehículos como Parte de Pago**\nSolo menciona esto si el cliente pregunta explícitamente si se acepta un vehículo como parte de pago:\n> Por el momento, no aceptamos autos como forma de pago directa. Sin embargo, si posee un vehículo eléctrico, podemos ponerle en contacto con clientes potenciales interesados en adquirirlo para facilitar su venta.\n\n# Estructura de la Base de Datos\n```sql\nCREATE TABLE autos (\n    id SERIAL PRIMARY KEY, estado VARCHAR(50), marca VARCHAR(100), modelo VARCHAR(100), ano INT,\n    color_exterior VARCHAR(50), color_interior VARCHAR(50), precio BIGINT, tipo_motor VARCHAR(100),\n    capacidad_bateria VARCHAR(50), autonomia VARCHAR(50), cargador_incluido VARCHAR(100),\n    velocidad_maxima VARCHAR(50), potencia VARCHAR(100), torque VARCHAR(100), aceleracion VARCHAR(100),\n    emisiones VARCHAR(100), tipo_transmision VARCHAR(100), relacion_caja_cambios VARCHAR(50),\n    traccion VARCHAR(100), rines VARCHAR(100), neumaticos VARCHAR(100), frenos TEXT,\n    distancia_entre_ejes VARCHAR(50), largo VARCHAR(50), ancho VARCHAR(50), alto VARCHAR(50),\n    pasajeros VARCHAR(10), peso VARCHAR(50), capacidad_carga VARCHAR(50),\n    capacidad_carga_maletero_delantero VARCHAR(50), tamano_pantalla VARCHAR(100), funciones TEXT,\n    tipo_llaves VARCHAR(255), volante VARCHAR(100), asientos_delanteros VARCHAR(255), asientos VARCHAR(100),\n    vidrios VARCHAR(100), aire_acondicionado VARCHAR(100), maletero VARCHAR(100),\n    puertos_usb_c VARCHAR(50), cargadores VARCHAR(100), consola VARCHAR(100), tomacorriente VARCHAR(50),\n    camara_interior VARCHAR(255), espejos_parasol VARCHAR(100), ajuste_retrovisores VARCHAR(255),\n    sistema_sonido VARCHAR(255), techo VARCHAR(255), sensores TEXT, camara_exterior TEXT,\n    cristales VARCHAR(255), puerta_maletero VARCHAR(255), sistema_seguridad TEXT,\n    pin_para_conducir VARCHAR(10), pin_guantera VARCHAR(10), airbags TEXT, riesgo_volcadura TEXT,\n    estructura VARCHAR(255), proteccion_impactos TEXT\n);\n```\n\n# Recordatorio Final\n* **Nunca muestres código SQL al cliente.**\n* Responde con lenguaje formal, claro y cordial.\n* Muestra las características de forma progresiva y sin saturar al cliente.\n* Usa emojis solo para destacar el modelo de auto.\n* Siempre que sea apropiado, intenta guiar la conversación hacia una de las acciones de gestión de citas. Fecha y Hora Actual: {{ $now }}\n",
+          "maxIterations": 10
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [3400, 320],
+      "id": "d5135060-da93-428b-9d28-cfe60b0e1ffb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.1,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [3320, 620],
+      "id": "1ecc7829-e274-4574-9e5c-b01d875daad5",
+      "name": "Google Gemini Chat Model1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.1,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [5680, 580],
+      "id": "cd90458e-85bd-4043-a47a-1c6571e5b68b",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "DmYIUInN9RAPNJ2o",
+          "name": "SafeMindapi2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories"
+        },
+        "limit": 4,
+        "where": {
+          "values": [
+            {
+              "column": "session_id",
+              "value": "={{ $('Unir mensajes').all()[0].json.numero }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [4020, 320],
+      "id": "a438946b-1c27-4da2-84bb-9393186f5014",
+      "name": "Postgres0"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{$fromAI('query')}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [3640, 600],
+      "id": "61b37eb6-93a8-4d04-a79a-bebd52f15187",
+      "name": "Postgres"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://automatizaciones-n8n.vqdohl.easypanel.host/mcp/b67acacc-b965-4ff1-a549-d89574481e8a/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [3740, 720],
+      "id": "591811d9-5ab3-4297-8c5a-ed44e26457aa",
+      "name": "MCP Gmail"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://automatizaciones-n8n.vqdohl.easypanel.host/mcp/c431151b-ecce-4272-a978-d737c95f3f8b/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [3860, 720],
+      "id": "8a8ed351-f6ed-4d4f-91ee-1461989d5764",
+      "name": "MCP Calendario"
+    }
+  ],
+  "connections": {
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Llenar CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Llenar CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Principal",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis4": {
+      "main": [
+        [
+          {
+            "node": "Obtener el mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener el mensaje": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete   message buffer": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "JSON parse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON parse": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Content text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content text": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "esperar 5 segundos": {
+      "main": [
+        [
+          {
+            "node": "Obtener el mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unir mensajes": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Redis4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete   message buffer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "esperar 5 segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate3": {
+      "main": [
+        [
+          {
+            "node": "Unir mensajes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "AutosDisponibles",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AutosDisponibles",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "llenar CRM": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Llenar CRM",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Llenar CRM": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AutosDisponibles": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Principal",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Postgres0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Llenar CRM",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres0": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Calendario": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16a6b0cb3f2779f788ecce4d5064590d7e8f169e990336d7b34199612b5b5c68"
+  }
+}

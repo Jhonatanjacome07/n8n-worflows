@@ -1,0 +1,59 @@
+{
+  "name": "My workflow 14",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "b67acacc-b965-4ff1-a549-d89574481e8a"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "c455956f-e300-4940-9466-3f52edd134f2",
+      "name": "MCP Server Trigger",
+      "webhookId": "b67acacc-b965-4ff1-a549-d89574481e8b"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', `Destinatario del email.`, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [80, 240],
+      "id": "69ca64c7-abaf-45d0-aeab-fa86851038ae",
+      "name": "Enviar email",
+      "webhookId": "def62aec-5fd4-42ab-848e-fe98855e6275",
+      "credentials": {}
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Enviar email": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8793ae1b-6137-457e-aee2-ea983b994dbb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16a6b0cb3f2779f788ecce4d5064590d7e8f169e990336d7b34199612b5b5c68"
+  },
+  "id": "0ZqNKWkbKbPo1oMO",
+  "tags": []
+}
